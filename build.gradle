@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.4'
+    id 'java'
+
+}
+apply plugin: 'io.spring.dependency-management'
+
+group "${appGroup}"
+version "${appVersion}"
+
+
+sourceCompatibility = "${javaVersion}"
+targetCompatibility = "${javaVersion}"
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation "io.springfox:springfox-boot-starter:${swaggerDependency}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerDependency}"
+    implementation "io.springfox:springfox-swagger2:${swaggerDependency}"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.data:spring-data-redis"
+    implementation "redis.clients:jedis:${redisClientDependency}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jacksonXmlDependency}"
+    implementation "javax.validation:validation-api:${javaxDependency}"
+    implementation 'org.hibernate.validator:hibernate-validator:6.0.10.Final'
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.powermock:powermock-api-mockito2:${powerMockVersion}"
+    testImplementation "org.powermock:powermock-module-junit4:${powerMockVersion}"
+    testImplementation "com.google.code.bean-matchers:bean-matchers:${beanMatcherVersion}"
+    testImplementation "org.mock-server:mockserver-netty:5.11.2"
+
+}
+

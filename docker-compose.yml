@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      exchange_network:
+        ipv4_address: 10.5.0.3
+  exchange-rate:
+    restart: on-failure
+    image: excahnge-rate
+    environment:
+      - REDIS_HOST=10.5.0.3
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    ports:
+      - 8080:8080
+    networks:
+      exchange_network:
+        ipv4_address: 10.5.0.4
+
+networks:
+  exchange_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

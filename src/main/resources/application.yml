@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: exchange-rate
+
+  jackson:
+    default-property-inclusion: NON_NULL
+    serialization:
+      write_dates_as_timestamps: false
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_ENUMS: true
+  cache:
+    type: redis
+    cache-names: ecbExchangeRate, ecbHistoricalExchangeRate
+    redis:
+      key-prefix:
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: 6379
+
+
+debug: false
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/css,text/plain
+    min-response-size: 1024
+ecb:
+  refresh:
+    current: 60
+    history: 86400
+  api:
+    current: https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml
+    history: https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml
+public:
+  url: https://www.xe.com/currencycharts/?from=%s&to=%s
+
+---
+#### DEV PROFILE ####
+spring:
+  profiles:
+    active: dev
